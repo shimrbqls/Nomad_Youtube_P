@@ -1,0 +1,22 @@
+{
+  "name": "nomad_youtube_p",
+  "version": "1.0.0",
+  "description": "Cloning youtube with vanilla and nodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shimrbqls/Nomad_Youtube_P.git"
+  },
+  "author": "shimrbqls",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shimrbqls/Nomad_Youtube_P/issues"
+  },
+  "homepage": "https://github.com/shimrbqls/Nomad_Youtube_P#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
