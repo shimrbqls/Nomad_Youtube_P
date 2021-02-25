@@ -18,5 +18,8 @@
   "homepage": "https://github.com/shimrbqls/Nomad_Youtube_P#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "scripts":{
+    "start":"node index.js"
   }
 }
