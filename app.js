@@ -22,8 +22,12 @@ scripts :
 
 //devDependencies : 해당 내용은 개발에 편리한 프로그램을 설치하기 위한 공간이다. ex) npm install xxx -D <- 이걸로 오케이가 됨 
 
+/*
 import express from "express";
 import morgan from "morgan";
+import helmet from "helmet";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 //const morgan = morgan();
 const app = express();
 //위의 const express에 선언된 내용을 실행시킨다.
@@ -39,6 +43,7 @@ function handlehome(req, res){
     console.log(req);
     res.send("안녕 이생퀴야");
 }
+//res.send() 응답의 마지막이다. 따라서 브라우저가 웹페이지를 요청 했을때 res.send가 결과창인것임
 //req = request = get?, res = response = post?
 
 //const handlehome = (req,res) => res.send("Hello from home");
@@ -53,7 +58,7 @@ function handleProfile(req, res){
 function betweenHome(req,res,next){
     console.log("Between");
     next();
-}
+} 
 
 // function middleTest(req,res,next){
 //     morgan.tiny;
@@ -61,7 +66,13 @@ function betweenHome(req,res,next){
 // app.use(middleTest);
 //위에 부분은 동작을 하지 않는다 왜지?
 
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(helmet());
 app.use(morgan("dev"));
+
+//app.use의 use는 누군가 해당 경로에 접속하면 안에 들어간 function을 사용하겠다는 의미
 
 // app.get이라는 function은 분명 express.get일것이다. 그럼 get은 어디서 나온것인가?
 app.get("/",handlehome);
@@ -70,3 +81,33 @@ app.get("/profile",handleProfile);
 
 app.listen(PORT,handleListening);
 // 콜백 함수 집어 넣기
+*/
+import express from "express";
+import morgan from "morgan";
+import helmet from "helmet";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import userRouter from "./routers/userRouter";
+import videoRouter from "./routers/videoRouter";
+import globalRouter from "./routers/globalRouter";
+import routes from "./routes";
+
+const app = express();
+
+const PORT = 4000;
+
+function betweenHome(req,res,next){
+    console.log("Between");
+    next();
+} 
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(helmet());
+app.use(morgan("dev"));
+
+app.use(routes.home,globalRouter);
+app.use(routes.users,userRouter);
+app.use(routes.videos,videoRouter);
+
+export default app;
