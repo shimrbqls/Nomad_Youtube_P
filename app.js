@@ -72,7 +72,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(helmet());
 app.use(morgan("dev"));
 
-//app.use의 use는 누군가 해당 경로에 접속하면 안에 들어간 function을 사용하겠다는 의미
+//app.xx에 관련된 것은 expressjs 홈페이지에 있는 api 가이드를 찾아볼 것.
 
 // app.get이라는 function은 분명 express.get일것이다. 그럼 get은 어디서 나온것인가?
 app.get("/",handlehome);
@@ -96,18 +96,15 @@ const app = express();
 
 const PORT = 4000;
 
-function betweenHome(req,res,next){
-    console.log("Between");
-    next();
-} 
-app.use(cookieParser());
-app.use(bodyParser.json());
+app.set("view engine", "pug");
+app.use(cookieParser()); // 쿠키를 전달받아서 사용할 수 있도록 만들어주는 미들웨어, 사용자 인증 같은 것에서 쿠키를 검사할 때 사용해야 한다.
+app.use(bodyParser.json()); // 사용자가 웹사이트로 전달하는 정보들을 검사하는 미들웨어, request정보에서 form이나 json형태로 된 body를 검사한다.
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(helmet());
-app.use(morgan("dev"));
+app.use(helmet()); // 어플리케이션이 더욱 안전한 구동을 위해 추가
+app.use(morgan("dev")); // 어플리케이션의 로그기록을 위해 추가
 
 app.use(routes.home,globalRouter);
-app.use(routes.users,userRouter);
-app.use(routes.videos,videoRouter);
+app.use(routes.home,userRouter);
+app.use(routes.home,videoRouter);
 
 export default app;
