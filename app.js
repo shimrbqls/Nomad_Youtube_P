@@ -102,9 +102,10 @@ app.use(bodyParser.json()); // 사용자가 웹사이트로 전달하는 정보�
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(helmet()); // 어플리케이션이 더욱 안전한 구동을 위해 추가
 app.use(morgan("dev")); // 어플리케이션의 로그기록을 위해 추가
-
+// 이거 위에는 웹페이지 구동 전에 setup function들 해놓은 것이다.
 app.use(routes.home,globalRouter);
 app.use(routes.home,userRouter);
 app.use(routes.home,videoRouter);
+// 실제 코드 구동부
 
 export default app;
