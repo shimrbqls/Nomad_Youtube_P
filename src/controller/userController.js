@@ -1,15 +1,15 @@
-export function Home(req,res){
-    res.send("Home");
+export function userSee(req,res){
+    res.send('${req.}');
 }
 
-export function Join(req,res){
-    res.send("Join");
+export function userLogout(req,res){
+    res.send("userLogout");
 }
 
-export function Edit(req,res){
-    res.send("UserEdit");
+export function userEdit(req,res){
+    res.send("userEdit");
 }
 
-export function Remove(req,res){
-    res.send("UserRelet");
+export function userDelete(req,res){
+    res.send("userDelete");
 }

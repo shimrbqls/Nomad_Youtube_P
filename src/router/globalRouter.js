@@ -1,10 +1,12 @@
 import express from "express";
-import {Home,Join} from "../controller/userController.js"
+import {home,homeJoin,homeLogin,homeSearch} from "../controller/homeController.js"
 
 const globalRouter = express.Router();
 
-globalRouter.get("/",Home);
-globalRouter.get("/join",Join);
+globalRouter.get("/",home);
+globalRouter.get("/join",homeJoin);
+globalRouter.get("/login",homeLogin);
+globalRouter.get("/search",homeSearch)
 
 export default globalRouter;
 
