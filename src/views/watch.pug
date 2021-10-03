@@ -1,7 +1,5 @@
-doctype html 
-html(lang="ko")
-    head
-        tilte Wetube 
-    body 
-        h1 Watch Video! 
-    include partials/footer.pug
+extend base.pug
+
+block content
+    h3 #{videos.views} #{videos.views === 1 ? "view" : "views"}
+    a(href=`${videos.id}/edit`) Edit Video &rarr;
