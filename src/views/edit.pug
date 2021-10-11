@@ -1,0 +1,13 @@
+extends base.pug
+
+block content
+    div
+        a(href="/video/upload") Upload Video
+    div
+        a(href="/video/home") Back to Video Home 
+    h4 Change Title of video
+    form(method="POST")
+        input(name="title",placeholder="Video Title", value=video.title, required)
+        input(placeholder="Description",type="text", value=video.description ,name="description", minlength = 20)
+        input(placeholder="Hashtags" type="text", value=video.hashtags.join() ,name="hashtags")
+        input(value="Save",type="submit")

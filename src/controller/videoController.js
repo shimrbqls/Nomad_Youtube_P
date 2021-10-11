@@ -1,5 +1,10 @@
 import Video from "../model/Video.js";
 
+function exchangehashtags(method){
+    method = method.split(",").map((word) => (word.startsWith("#") ? word : `#${word}`));
+    return method;
+}
+
 function handleSearch (error,video){
     console.log("errors",error);
     console.log("videos",video);
@@ -20,7 +25,7 @@ export async function postUpload (req,res){
     const video = new Video({
             title: title,
             description: description,
-            hashtags: hashtags.split(",").map((word) => `#${word}`),
+            hashtags: exchangehashtags(hashtags),
         });
     await video.save();
     }
@@ -30,31 +35,47 @@ export async function postUpload (req,res){
     res.redirect("/video/home");
 }
 
-export function see(req,res){
+export async function see(req,res){
     const id = req.params.id;
-    console.log(id);
-    res.render("watch",{pageTitle: `Watching`, views:view});
+    const video = await Video.findById(id);
+    if (!video){
+        res.render("404",{ pageTitle: " Video not found."});
+    }
+    res.render("watch",{pageTitle: video.title, video:video});
 }
 
-export function getEdit(req,res){
+export async function getEdit(req,res){
     const id = req.params.id;
-    res.render("getEdit",{pageTitle: `edit`});
+    const video = await Video.findById(id);
+    if (!video){
+        res.render("404",{ pageTitle: " Video not found."});
+    }
+    res.render("edit",{pageTitle: (`Edit : ${video.title}`), video:video});
 }
 
-export function postEdit(req,res){
+export async function postEdit(req,res){
     const id = req.params.id;
-    const title = req.body.title;
+    const {title, description, hashtags} = req.body;
+    const video = await Video.findById(id);
+    if (!video){
+        res.render("404",{ pageTitle: " Video not found."});
+    }
+    await Video.findByIdAndUpdate(id,{
+        title: title,
+        description: description,
+        hashtags: exchangehashtags(hashtags),
+    })
+    await video.save();
     res.redirect(`/video/${id}`);
+}
+
+export async function deleteVideo(req,res){
+    const id = req.params.id;
+    await Video.findByIdAndDelete(id);
+    return res.redirect("/video/home");
 }
 
 export function search(req,res){
     res.send("deleteVideo");
 }
 
-export function upload(req,res){
-    res.render("upload");
-}
-
-export function deleteVideo(req,res){
-    res.send("delete")
-}

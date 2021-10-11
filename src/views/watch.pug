@@ -1,5 +1,11 @@
 extend base.pug
 
 block content
-    h3 #{videos.views} #{videos.views === 1 ? "view" : "views"}
-    a(href=`${videos.id}/edit`) Edit Video &rarr;
+    a(href="/video/home") Back to Video Home 
+    div
+        p=video.description
+        p=video.hashtags
+        small=video.createdAt
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
